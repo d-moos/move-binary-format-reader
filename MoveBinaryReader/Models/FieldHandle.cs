@@ -1,6 +1,6 @@
 ﻿namespace MoveBinaryReader.Models;
 
-public struct FieldHandles : IReadableMoveModel
+public struct FieldHandle : IReadableMoveModel
 {
     public ulong Owner { get; set; }
     public ulong Index { get; set; }

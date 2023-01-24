@@ -16,11 +16,11 @@ public class MoveReaderSmokeTest : BaseSmokeTest
     [GenericTestCase(typeof(Constant), TableKind.ConstantPool)]
     [GenericTestCase(typeof(Identifier), TableKind.Identifiers)]
     [GenericTestCase(typeof(AddressIdentifier), TableKind.AddressIdentifiers)]
-    [GenericTestCase(typeof(StructDefinition), TableKind.StructIdentifiers)]
+    [GenericTestCase(typeof(StructDefinition), TableKind.StructDefinitions)]
     [GenericTestCase(typeof(StructDefInstantiation), TableKind.StructDefInstantiations)]
     [GenericTestCase(typeof(FunctionDefinition), TableKind.FunctionDefinitions)]
-    [GenericTestCase(typeof(FieldHandles), TableKind.FieldHandles)]
-    [GenericTestCase(typeof(FieldInstantiations), TableKind.FieldInstantiations)]
+    [GenericTestCase(typeof(FieldHandle), TableKind.FieldHandles)]
+    [GenericTestCase(typeof(FieldInstantiation), TableKind.FieldInstantiations)]
     [GenericTestCase(typeof(FriendDeclarations), TableKind.FriendDecls)]
     public void CanParseTable<T>(TableKind tableKind) where T : IReadableMoveModel, new()
     {

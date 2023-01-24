@@ -10,7 +10,7 @@ public enum TableKind : byte
     ConstantPool = 0x06,
     Identifiers = 0x07,
     AddressIdentifiers = 0x08,
-    StructIdentifiers = 0x0A,
+    StructDefinitions = 0x0A,
     StructDefInstantiations = 0x0B,
     FunctionDefinitions = 0x0C,
     FieldHandles = 0x0D,
