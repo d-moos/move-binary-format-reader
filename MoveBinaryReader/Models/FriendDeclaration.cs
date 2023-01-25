@@ -1,6 +1,6 @@
 ﻿namespace MoveBinaryReader.Models;
 
-public struct FriendDeclarations : IReadableMoveModel
+public struct FriendDeclaration : IReadableMoveModel
 {
     public ulong Address { get; set; }
     public ulong Name { get; set; }

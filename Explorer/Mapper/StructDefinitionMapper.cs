@@ -4,15 +4,16 @@ namespace Explorer.Mapper;
 
 public static class StructDefinitionMapper
 {
-    public static StructDefinition ToObjectType(this MoveBinaryReader.Models.StructDefinition structDefinition)
+    public static StructDefinition ToObjectType(this MoveBinaryReader.Models.StructDefinition structDefinition, string moduleIdentifier)
         => new(Convert.ToInt64(structDefinition.StructHandle),
-            structDefinition.FieldInformation.ToObjectType()
+            structDefinition.FieldInformation.ToObjectType(moduleIdentifier),
+            moduleIdentifier
         );
 
-    public static FieldInformation ToObjectType(this MoveBinaryReader.Models.FieldInformation fieldInformation)
+    public static FieldInformation ToObjectType(this MoveBinaryReader.Models.FieldInformation fieldInformation, string moduleIdentifier)
         => new(
             fieldInformation.Tag.ToObjectType(),
-            fieldInformation.Fields.Select(x => x.ToObjectType()).ToArray()
+            fieldInformation.Fields.Select(x => x.ToObjectType(moduleIdentifier)).ToArray()
         );
 
     public static Tag ToObjectType(this MoveBinaryReader.Models.Tag tag) => tag switch
@@ -22,8 +23,9 @@ public static class StructDefinitionMapper
         _ => throw new ArgumentOutOfRangeException(nameof(tag), tag, null)
     };
 
-    public static Field ToObjectType(this MoveBinaryReader.Models.Field field) => new(
+    public static Field ToObjectType(this MoveBinaryReader.Models.Field field, string moduleIdentifier) => new(
         Convert.ToInt64(field.Name),
-        field.Type.ToObjectType()
+        field.Type.ToObjectType(),
+        moduleIdentifier
     );
 }

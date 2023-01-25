@@ -6,6 +6,6 @@ namespace Explorer.Mapper;
 
 public static class FieldHandleMapper
 {
-    public static FieldHandle ToObjectType(this MoveBinaryReader.Models.FieldHandle fieldHandle) =>
-        new(Convert.ToInt64(fieldHandle.Owner), Convert.ToInt64(fieldHandle.Index));
+    public static FieldHandle ToObjectType(this MoveBinaryReader.Models.FieldHandle fieldHandle, string moduleIdentifier) =>
+        new(Convert.ToInt64(fieldHandle.Owner), Convert.ToInt64(fieldHandle.Index), moduleIdentifier);
 }

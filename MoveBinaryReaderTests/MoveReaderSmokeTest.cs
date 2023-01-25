@@ -21,7 +21,7 @@ public class MoveReaderSmokeTest : BaseSmokeTest
     [GenericTestCase(typeof(FunctionDefinition), TableKind.FunctionDefinitions)]
     [GenericTestCase(typeof(FieldHandle), TableKind.FieldHandles)]
     [GenericTestCase(typeof(FieldInstantiation), TableKind.FieldInstantiations)]
-    [GenericTestCase(typeof(FriendDeclarations), TableKind.FriendDecls)]
+    [GenericTestCase(typeof(FriendDeclaration), TableKind.FriendDecls)]
     public void CanParseTable<T>(TableKind tableKind) where T : IReadableMoveModel, new()
     {
         var range = GetTableRange(tableKind);
