@@ -6,6 +6,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Explorer/Explorer.csproj", "Explorer/"]
+COPY ["MoveBinaryReader/MoveBinaryReader.csproj", "MoveBinaryReader/"]
 RUN dotnet restore "Explorer/Explorer.csproj"
 COPY . .
 WORKDIR "/src/Explorer"
