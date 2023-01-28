@@ -2,32 +2,11 @@
 
 public struct FunctionHandle : IReadableMoveModel
 {
-    /// <summary>
-    /// ULEB128 index in the MODULE_HANDLES table of the module where the function is defined
-    /// </summary>
     public ulong Module { get; set; }
-
-    /// <summary>
-    /// ULEB128 index into the IDENTIFIERS table of the name of the function
-    /// </summary>
     public ulong Name { get; set; }
-
-    /// <summary>
-    /// ULEB128 index into the SIGNATURES table for the argument types of the function
-    /// </summary>
     public ulong Parameters { get; set; }
-
-    /// <summary>
-    /// ULEB128 index into the SIGNATURES table for the return types of the function
-    /// </summary>
     public ulong Return { get; set; }
-
-    /// <summary>
-    /// vector of type parameter kinds if the function is generic, an empty vector otherwise:
-    /// - length: ULEB128 length of the vector, effectively the number of type parameters for the generic function
-    /// - kinds: array of length U8 kind values; not present if length is 0
-    /// </summary>
-    public Ability[] TypeParameters { get; set; }
+    public Ability[] Abilities { get; set; }
 
     public bool TryRead(IMoveReader reader)
     {
@@ -50,7 +29,7 @@ public struct FunctionHandle : IReadableMoveModel
         Name = name;
         Parameters = parameters;
         Return = returnValue;
-        TypeParameters = abilityFlags.Length == 0 ? Array.Empty<Ability>() : abilityFlags; 
+        Abilities = abilityFlags.Length == 0 ? Array.Empty<Ability>() : abilityFlags; 
 
         return true;
     }
