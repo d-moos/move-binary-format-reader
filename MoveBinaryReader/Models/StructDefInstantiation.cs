@@ -7,10 +7,10 @@ public struct StructDefInstantiation : IReadableMoveModel
     
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var structHandle))
+        if (!reader.TryReadModel<ULEB128>(out var structHandle))
             return false;
         
-        if (!reader.TryReadULEB128(out var instantiation))
+        if (!reader.TryReadModel<ULEB128>(out var instantiation))
             return false;
 
         StructHandle = structHandle;

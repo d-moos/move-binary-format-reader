@@ -7,10 +7,10 @@ public struct FieldHandle : IReadableMoveModel
     
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var owner))
+        if (!reader.TryReadModel<ULEB128>(out var owner))
             return false;
         
-        if (!reader.TryReadULEB128(out var index))
+        if (!reader.TryReadModel<ULEB128>(out var index))
             return false;
 
         Owner = owner;

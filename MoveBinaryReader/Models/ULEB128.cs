@@ -30,4 +30,7 @@ public struct ULEB128 : IReadableMoveModel
         Value = val;
         return true;
     }
+
+    public static implicit operator ulong(ULEB128 uleb) => uleb.Value;
+    public static implicit operator ULEB128(ulong value) => new() { Value = value};
 }

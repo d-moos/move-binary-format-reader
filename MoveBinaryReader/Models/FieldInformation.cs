@@ -11,7 +11,7 @@ public struct FieldInformation : IReadableMoveModel
         if (!reader.TryRead<Tag>(out var tag))
             return false;
 
-        if (!reader.TryReadULEB128(out var fieldCount))
+        if (!reader.TryReadModel<ULEB128>(out var fieldCount))
             return false;
 
         if (!reader.TryReadModelCollection<Field>(out var fields, fieldCount))

@@ -43,7 +43,13 @@ public struct ByteCode : IReadableMoveModel
             case Opcode.ImmBorrowGlobalGeneric:
             case Opcode.MoveFromGeneric:
             case Opcode.MoveToGeneric:
-                if (!reader.TryReadULEB128(out var index))
+            case Opcode.VecLen:
+            case Opcode.VecImmBorrow:
+            case Opcode.VecMutBorrow:
+            case Opcode.VecPushBack:
+            case Opcode.VecPopBack:
+            case Opcode.VecSwap:
+                if (!reader.TryReadModel<ULEB128>(out var index))
                     return false;
                 Payload = index;
                 break;
@@ -57,12 +63,38 @@ public struct ByteCode : IReadableMoveModel
                     return false;
                 Payload = u8Value;
                 break;
+            case Opcode.LdU16:
+                if (!reader.TryRead<ushort>(out var u16Value))
+                    return false;
+                Payload = u16Value;
+                break;
+            case Opcode.LdU32:
+                if (!reader.TryRead<uint>(out var u32Value))
+                    return false;
+                Payload = u32Value;
+                break;
+            case Opcode.LdU256:
+                var u256 = new byte[32];
+                
+                if (!reader.TryRead(u256.AsSpan()))
+                    return false;
+                Payload = u256;
+                break;
             case Opcode.LdU128:
                 var u128 = new byte[16];
                 
                 if (!reader.TryRead(u128.AsSpan()))
                     return false;
                 Payload = u128;
+                break;
+            case Opcode.VecPack:
+            case Opcode.VecUnpack:
+                if (!reader.TryReadModel<ULEB128>(out var s))
+                    return false;
+                if (!reader.TryRead<ulong>(out var elementLen))
+                    return false;
+                
+                Payload = new[] {(ulong)s, elementLen };
                 break;
         }
         

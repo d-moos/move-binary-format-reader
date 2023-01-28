@@ -14,7 +14,7 @@ public abstract class BaseSmokeTest : IDisposable
 
     public BaseSmokeTest()
     {
-        _fileStream = File.OpenRead("btc.mv");
+        _fileStream = File.OpenRead("base.mv");
         var bytes = new byte[_fileStream.Length];
         _fileStream.Read(bytes, 0, bytes.Length);
 

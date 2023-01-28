@@ -13,7 +13,7 @@ public struct Constant : IReadableMoveModel
         if (!reader.TryReadModel<SignatureToken>(out var signatureToken))
             return false;
 
-        if (!reader.TryReadULEB128(out var valueLength))
+        if (!reader.TryReadModel<ULEB128>(out var valueLength))
             return false;
 
         var span = new byte[valueLength];

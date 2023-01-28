@@ -25,7 +25,7 @@ public class MoveReaderSmokeTest : BaseSmokeTest
     public void CanParseTable<T>(TableKind tableKind) where T : IReadableMoveModel, new()
     {
         var range = GetTableRange(tableKind);
-        var result = MoveReader.TryReadModelCollectionInRange<T>(out _, range.Start, range.End);
+        var result = MoveReader.TryReadModelCollectionInRange<T>(out var model, range.Start, range.End);
         
         Assert.IsTrue(result);
     }

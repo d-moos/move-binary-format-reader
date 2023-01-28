@@ -10,7 +10,7 @@ public struct FunctionDefinition : IReadableMoveModel
 
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var functionHandle))
+        if (!reader.TryReadModel<ULEB128>(out var functionHandle))
             return false;
 
         if (!reader.TryRead<Visibility>(out var visibility))

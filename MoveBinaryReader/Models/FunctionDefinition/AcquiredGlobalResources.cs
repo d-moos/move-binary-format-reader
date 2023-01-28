@@ -6,7 +6,7 @@ public struct AcquiredGlobalResources : IReadableMoveModel
 
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadUleb128ModelCollection<ULEB128>(out var resources))
+        if (!reader.TryReadModelVector<ULEB128>(out var resources))
             return false;
 
         Resources = resources;

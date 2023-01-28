@@ -7,10 +7,10 @@ public struct FriendDeclaration : IReadableMoveModel
     
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var address))
+        if (!reader.TryReadModel<ULEB128>(out var address))
             return false;
         
-        if (!reader.TryReadULEB128(out var name))
+        if (!reader.TryReadModel<ULEB128>(out var name))
             return false;
 
         Address = address;

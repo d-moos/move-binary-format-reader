@@ -19,10 +19,10 @@ public struct FunctionInstantiation : IReadableMoveModel
 
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var functionHandle))
+        if (!reader.TryReadModel<ULEB128>(out var functionHandle))
             return false;
 
-        if (!reader.TryReadULEB128(out var instantiation))
+        if (!reader.TryReadModel<ULEB128>(out var instantiation))
             return false;
 
         FunctionHandle = functionHandle;

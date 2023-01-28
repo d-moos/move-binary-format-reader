@@ -7,7 +7,7 @@ public struct StructDefinition : IReadableMoveModel
     
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var structHandle))
+        if (!reader.TryReadModel<ULEB128>(out var structHandle))
             return false;
 
         if (!reader.TryReadModel<FieldInformation>(out var fieldInformation))

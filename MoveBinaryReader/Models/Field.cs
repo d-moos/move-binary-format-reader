@@ -9,7 +9,7 @@ public struct Field : IReadableMoveModel
     
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var name))
+        if (!reader.TryReadModel<ULEB128>(out var name))
             return false;
 
         if (!reader.TryReadModel<SignatureToken>(out var signature))

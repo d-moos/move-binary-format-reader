@@ -7,10 +7,10 @@ public struct CodeUnit : IReadableMoveModel
 
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var locals))
+        if (!reader.TryReadModel<ULEB128>(out var locals))
             return false;
 
-        if (!reader.TryReadUleb128ModelCollection<ByteCode>(out var codes))
+        if (!reader.TryReadModelVector<ByteCode>(out var codes))
             return false;
 
         Locals = locals;

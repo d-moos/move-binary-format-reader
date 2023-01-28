@@ -27,30 +27,30 @@ public struct FunctionHandle : IReadableMoveModel
     /// - length: ULEB128 length of the vector, effectively the number of type parameters for the generic function
     /// - kinds: array of length U8 kind values; not present if length is 0
     /// </summary>
-    public Ability Ability { get; set; }
+    public Ability[] TypeParameters { get; set; }
 
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var module))
+        if (!reader.TryReadModel<ULEB128>(out var module))
             return false;
 
-        if (!reader.TryReadULEB128(out var name))
+        if (!reader.TryReadModel<ULEB128>(out var name))
             return false;
 
-        if (!reader.TryReadULEB128(out var parameters))
+        if (!reader.TryReadModel<ULEB128>(out var parameters))
             return false;
 
-        if (!reader.TryReadULEB128(out var returnValue))
+        if (!reader.TryReadModel<ULEB128>(out var returnValue))
             return false;
 
-        if (!reader.TryReadUleb128Collection<Ability>(out var abilityFlags))
+        if (!reader.TryReadVector<Ability>(out var abilityFlags))
             return false;
 
         Module = module;
         Name = name;
         Parameters = parameters;
         Return = returnValue;
-        Ability = abilityFlags.Length == 0 ? Ability.Empty : abilityFlags.First();  // TODO: @mystenlabs why a vector? 
+        TypeParameters = abilityFlags.Length == 0 ? Array.Empty<Ability>() : abilityFlags; 
 
         return true;
     }

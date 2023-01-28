@@ -25,17 +25,17 @@ public struct SignatureToken : IReadableMoveModel
             
             case SignatureTokenType.TypeParameter:
             case SignatureTokenType.Struct:
-                if (!reader.TryReadULEB128(out var additionalUleb))
+                if (!reader.TryReadModel<ULEB128>(out var additionalUleb))
                     return false;
 
                 AdditionalPayload = new[] { (object)additionalUleb };
                 break;
             
             case SignatureTokenType.StructInstantiation:
-                if (!reader.TryReadULEB128(out var structHandleIndex))
+                if (!reader.TryReadModel<ULEB128>(out var structHandleIndex))
                     return false;
 
-                if (!reader.TryReadUleb128ModelCollection<SignatureToken>(out var substitutionTypes))
+                if (!reader.TryReadModelVector<SignatureToken>(out var substitutionTypes))
                     return false;
 
                 var payload = new List<object>

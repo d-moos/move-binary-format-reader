@@ -10,9 +10,9 @@ public struct TableHeader : IReadableMoveModel
     {
         if (!reader.TryRead<TableKind>(out var kind))
             return false;
-        if (!reader.TryReadULEB128(out var offset))
+        if (!reader.TryReadModel<ULEB128>(out var offset))
             return false;
-        if (!reader.TryReadULEB128(out var length))
+        if (!reader.TryReadModel<ULEB128>(out var length))
             return false;
 
         Kind = kind;

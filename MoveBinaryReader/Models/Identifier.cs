@@ -8,7 +8,7 @@ public struct Identifier : IReadableMoveModel
     
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadUleb128Collection<byte>(out var chars)) 
+        if (!reader.TryReadVector<byte>(out var chars)) 
             return false;
 
         Value = Encoding.ASCII.GetString(chars);

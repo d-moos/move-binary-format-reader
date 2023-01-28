@@ -6,7 +6,7 @@ public struct Signature : IReadableMoveModel
 
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadUleb128ModelCollection<SignatureToken>(out var signatureTokens))
+        if (!reader.TryReadModelVector<SignatureToken>(out var signatureTokens))
             return false;
 
         SignatureTokens = signatureTokens;

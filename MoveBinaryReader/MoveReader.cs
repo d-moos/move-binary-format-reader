@@ -1,6 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using MoveBinaryReader.Models;
 
 namespace MoveBinaryReader;
 
@@ -13,32 +14,6 @@ public class MoveReader : IMoveReader
     public MoveReader(Memory<byte> data)
     {
         _data = data;
-    }
-
-    public bool TryReadULEB128(out ulong value)
-    {
-        value = default;
-
-        ulong val = 0;
-        var shift = 0;
-        var more = true;
-
-        while (more)
-        {
-            var nextResult = TryRead<byte>(out var next);
-            if (!nextResult)
-                throw new InvalidOperationException("Unexpected end of stream");
-
-            byte b = (byte)next;
-
-            more = (b & 0x80) != 0; // extract msb
-            ulong chunk = b & 0x7fUL; // extract lower 7 bits
-            val |= chunk << shift;
-            shift += 7;
-        }
-
-        value = val;
-        return true;
     }
 
     public bool TryRead<T>(out T value) where T : unmanaged
@@ -84,11 +59,11 @@ public class MoveReader : IMoveReader
         return false;
     }
 
-    public bool TryReadUleb128Collection<T>(out T[] value) where T : unmanaged
+    public bool TryReadVector<T>(out T[] value) where T : unmanaged
     {
         value = Array.Empty<T>();
 
-        if (!TryReadULEB128(out var length))
+        if (!TryReadModel<ULEB128>(out var length))
             return false;
 
         if (length == 0)
@@ -97,11 +72,11 @@ public class MoveReader : IMoveReader
         return TryReadCollection(out value, length);
     }
 
-    public bool TryReadUleb128ModelCollection<T>(out T[] value) where T : IReadableMoveModel, new()
+    public bool TryReadModelVector<T>(out T[] value) where T : IReadableMoveModel, new()
     {
         value = Array.Empty<T>();
 
-        if (!TryReadULEB128(out var length))
+        if (!TryReadModel<ULEB128>(out var length))
             return false;
 
         if (length == 0)
@@ -182,26 +157,6 @@ public class MoveReader : IMoveReader
         return false;
     }
     
-
-    public bool TryRead(out string value)
-    {
-        if (!TryRead<byte>(out var length))
-        {
-            value = default;
-            return false;
-        }
-
-        if (this.ReadPosition + length > _data.Length)
-        {
-            value = null;
-            return false;
-        }
-
-        value = Encoding.ASCII.GetString(_data.Span.Slice(this.ReadPosition, length));
-        ReadPosition += length;
-        return true;
-    }
-
     public bool TryReadModel<T>(out T model) where T : IReadableMoveModel, new()
     {
         model = new T();

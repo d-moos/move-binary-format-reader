@@ -26,16 +26,16 @@ public struct StructHandle : IReadableMoveModel
 
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var module))
+        if (!reader.TryReadModel<ULEB128>(out var module))
             return false;
 
-        if (!reader.TryReadULEB128(out var name))
+        if (!reader.TryReadModel<ULEB128>(out var name))
             return false;
 
         if (!reader.TryRead<Ability>(out var nominalResource))
             return false;
 
-        if (!reader.TryReadUleb128Collection<StructTypeParameter>(out var typeParameters))
+        if (!reader.TryReadVector<StructTypeParameter>(out var typeParameters))
             return false;
 
         Module = module;

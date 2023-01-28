@@ -16,7 +16,7 @@ public struct FileHeader : IReadableMoveModel
         if (!reader.TryRead<uint>(out var version))
             return false;
 
-        if (!reader.TryReadULEB128(out var tableCount))
+        if (!reader.TryReadModel<ULEB128>(out var tableCount))
             return false;
 
         Version = version;

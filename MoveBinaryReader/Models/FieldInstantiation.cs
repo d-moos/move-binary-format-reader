@@ -7,10 +7,10 @@ public struct FieldInstantiation : IReadableMoveModel
     
     public bool TryRead(IMoveReader reader)
     {
-        if (!reader.TryReadULEB128(out var fieldHandle))
+        if (!reader.TryReadModel<ULEB128>(out var fieldHandle))
             return false;
         
-        if (!reader.TryReadULEB128(out var instantiation))
+        if (!reader.TryReadModel<ULEB128>(out var instantiation))
             return false;
 
         FieldHandle = fieldHandle;
