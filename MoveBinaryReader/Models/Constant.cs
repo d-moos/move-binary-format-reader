@@ -5,7 +5,7 @@ namespace MoveBinaryReader.Models;
 public struct Constant : IReadableMoveModel
 {
     public SignatureToken SignatureToken { get; set; }
-    public ulong ValueLength { get; set; } // TODO: check
+    public ULEB128 ValueLength { get; set; } // TODO: check
     public byte[] SerializedValue { get; set; }
 
     public bool TryRead(IMoveReader reader)
